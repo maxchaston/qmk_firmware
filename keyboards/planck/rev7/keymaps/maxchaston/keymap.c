@@ -16,16 +16,16 @@
 
 #include QMK_KEYBOARD_H
 
-enum planck_layers { _QWERTY, _COLEMAK, _DVORAK, _LOWER, _RAISE, _PLOVER, _ADJUST };
+enum planck_layers { _QWERTY, _LOWER, _RAISE, _PLOVER, _ADJUST , _VIM, _MOUSE};
 
 enum planck_keycodes { PLOVER = SAFE_RANGE, BACKLIT, EXT_PLV };
 
 #define LOWER MO(_LOWER)
 #define RAISE MO(_RAISE)
+#define VIM MO(_VIM)
+#define MOUSE MO(_MOUSE)
 
 #define QWERTY PDF(_QWERTY)
-#define COLEMAK PDF(_COLEMAK)
-#define DVORAK PDF(_DVORAK)
 
 /* clang-format off */
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -42,46 +42,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_QWERTY] = LAYOUT_planck_grid(
-    KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
-    KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT ,
-    BACKLIT, KC_LCTL, KC_LGUI, KC_LALT, LOWER,   KC_RSFT, KC_SPC,  RAISE,   KC_ESC,  KC_DOWN, KC_UP,   KC_RGHT
-),
-
-/* Colemak
- * ,-----------------------------------------------------------------------------------.
- * | Tab  |   Q  |   W  |   F  |   P  |   G  |   J  |   L  |   U  |   Y  |   ;  | Bksp |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Esc  |   A  |   R  |   S  |   T  |   D  |   H  |   N  |   E  |   I  |   O  |  '   |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Shift|   Z  |   X  |   C  |   V  |   B  |   K  |   M  |   ,  |   .  |   /  |Enter |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Brite| Ctrl | Alt  | GUI  |Lower |    Space    |Raise | Left | Down |  Up  |Right |
- * `-----------------------------------------------------------------------------------'
- */
-[_COLEMAK] = LAYOUT_planck_grid(
-    KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_G,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_BSPC,
-    KC_ESC,  KC_A,    KC_R,    KC_S,    KC_T,    KC_D,    KC_H,    KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT,
-    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_K,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT ,
-    BACKLIT, KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_RSFT, KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
-),
-
-/* Dvorak
- * ,-----------------------------------------------------------------------------------.
- * | Tab  |   '  |   ,  |   .  |   P  |   Y  |   F  |   G  |   C  |   R  |   L  | Bksp |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Esc  |   A  |   O  |   E  |   U  |   I  |   D  |   H  |   T  |   N  |   S  |  /   |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Shift|   ;  |   Q  |   J  |   K  |   X  |   B  |   M  |   W  |   V  |   Z  |Enter |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Brite| Ctrl | Alt  | GUI  |Lower |    Space    |Raise | Left | Down |  Up  |Right |
- * `-----------------------------------------------------------------------------------'
- */
-[_DVORAK] = LAYOUT_planck_grid(
-    KC_TAB,  KC_QUOT, KC_COMM, KC_DOT,  KC_P,    KC_Y,    KC_F,    KC_G,    KC_C,    KC_R,    KC_L,    KC_BSPC,
-    KC_ESC,  KC_A,    KC_O,    KC_E,    KC_U,    KC_I,    KC_D,    KC_H,    KC_T,    KC_N,    KC_S,    KC_SLSH,
-    KC_LSFT, KC_SCLN, KC_Q,    KC_J,    KC_K,    KC_X,    KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,    KC_ENT ,
-    BACKLIT, KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_RSFT, KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+    KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,              KC_BSPC,
+    KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    LT(_VIM, KC_SCLN),  KC_QUOT,
+    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,           KC_ENT ,
+    BACKLIT, KC_LCTL, KC_LGUI, KC_LALT, LOWER,   KC_RSFT, KC_SPC,  RAISE,   LT(_MOUSE, KC_ESC),  KC_DOWN, KC_UP,             KC_RGHT
 ),
 
 /* Lower
@@ -152,10 +116,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_ADJUST] = LAYOUT_planck_grid(
     _______, QK_BOOT, DB_TOGG, UG_TOGG, UG_NEXT, UG_HUEU, UG_HUED, UG_SATU, UG_SATD, UG_SPDU, UG_SPDD, KC_DEL ,
-    _______, EE_CLR,  MU_NEXT, AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY,  COLEMAK, DVORAK,  PLOVER,  _______,
+    _______, EE_CLR,  MU_NEXT, AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY,  _______, _______,  PLOVER,  _______,
     _______, AU_PREV, AU_NEXT, MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  _______, _______, _______, _______, _______,
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
-)
+	),
+
+
+[_VIM] = LAYOUT_planck_grid(
+	_______,  _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,  _______,
+	_______,  _______,    _______,    _______,    _______,    _______,    KC_LEFT,    KC_DOWN, KC_UP, KC_RGHT,    _______,  _______,
+	_______,  _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,  _______,
+	_______,  _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,  _______
+	),
+
+[_MOUSE] = LAYOUT_planck_grid(
+	_______,  _______,    _______,    MS_UP,    _______,    _______,    _______,       _______,       _______,    MS_WHLU, _______,  _______,
+	_______,  _______,    MS_LEFT,    MS_DOWN,    MS_RGHT,    _______,    _______,       MS_BTN1,    MS_BTN2, MS_WHLD, _______,  _______,
+	_______,  _______,    _______,    _______,    _______,    _______,    _______,       _______,       _______,    _______,    _______,  _______,
+	_______,  _______,    _______,    _______,    _______,    _______,    _______,       _______,       _______,    _______,    _______,  _______
+	),
 
 };
 
