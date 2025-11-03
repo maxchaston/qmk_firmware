@@ -67,3 +67,6 @@
 #define MOUSEKEY_TIME_TO_MAX    64
 
 #define HOLD_ON_OTHER_KEY_PRESS
+
+// Caps word on double tap shift
+#define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD
