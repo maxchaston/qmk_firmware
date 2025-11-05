@@ -70,3 +70,5 @@
 
 // Caps word on double tap shift
 #define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD
+
+#define TAPPING_TOGGLE 2
