@@ -54,17 +54,26 @@
 /* #define MOUSEKEY_INTERVAL 20 */
 /* #define MOUSEKEY_BASE_SPEED 1000 */
 /* #define MK_VARIANT MK_TYPE_KINETIC */
+
 // Mouse key speed and acceleration.
-#undef MOUSEKEY_DELAY
-#define MOUSEKEY_DELAY          0
-#undef MOUSEKEY_INTERVAL
-#define MOUSEKEY_INTERVAL       16
-#undef MOUSEKEY_WHEEL_DELAY
-#define MOUSEKEY_WHEEL_DELAY    0
-#undef MOUSEKEY_MAX_SPEED
-#define MOUSEKEY_MAX_SPEED      6
-#undef MOUSEKEY_TIME_TO_MAX
-#define MOUSEKEY_TIME_TO_MAX    64
+/* #undef MOUSEKEY_DELAY */
+/* #define MOUSEKEY_DELAY          0 */
+/* #undef MOUSEKEY_INTERVAL */
+/* #define MOUSEKEY_INTERVAL       16 */
+/* #undef MOUSEKEY_WHEEL_DELAY */
+/* #define MOUSEKEY_WHEEL_DELAY    0 */
+/* #undef MOUSEKEY_MAX_SPEED */
+/* #define MOUSEKEY_MAX_SPEED      6 */
+/* #undef MOUSEKEY_TIME_TO_MAX */
+/* #define MOUSEKEY_TIME_TO_MAX    64 */
+
+#define MOUSEKEY_INERTIA
+#define MOUSEKEY_DELAY 0
+#define MOUSEKEY_INTERVAL 8
+#define MOUSEKEY_TIME_TO_MAX 64
+#define MOUSEKEY_MAX_SPEED 40
+#define MOUSEKEY_FRICTION  1
+#define MOUSEKEY_MOVE_DELTA 1
 
 #define HOLD_ON_OTHER_KEY_PRESS
 
