@@ -17,12 +17,12 @@
 #pragma once
 
 #ifdef AUDIO_ENABLE
-#    define STARTUP_SONG SONG(PLANCK_SOUND)
-// #define STARTUP_SONG SONG(NO_SOUND)
-
-#    define DEFAULT_LAYER_SONGS \
+		#define STARTUP_SONG SONG(S__NOTE(_E2))
+  #define DEFAULT_LAYER_SONGS \
         { SONG(QWERTY_SOUND), SONG(COLEMAK_SOUND), SONG(DVORAK_SOUND) }
 #endif
+
+
 
 /*
  * MIDI options
@@ -40,7 +40,7 @@
    - Virtual sustain, portamento, and modulation wheel
    - etc.
 */
-// #define MIDI_ADVANCED
+#define MIDI_ADVANCED
 
 /*
  * Encoder options
