@@ -127,7 +127,8 @@ static int8_t move_unit(uint8_t axis) {
         dir     = mousekey_x_dir;
     }
 
-    int16_t base_move = dir * MOUSEKEY_MOVE_DELTA * 2;
+    /* int16_t base_move = dir * MOUSEKEY_MOVE_DELTA * 2; */
+    int16_t base_move = dir * MOUSEKEY_MOVE_DELTA;
 
     if (mousekey_frame < 2) { // first frame(s): initial keypress moves one pixel
         mousekey_frame = 1;
