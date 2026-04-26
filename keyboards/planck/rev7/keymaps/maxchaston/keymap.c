@@ -14,6 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "config.h"
 #include QMK_KEYBOARD_H
 
 enum planck_layers { _QWERTY, _LOWER, _RAISE, _PLOVER, _ADJUST , _VIM, _MOUSE};
@@ -27,8 +28,12 @@ enum planck_keycodes { PLOVER = SAFE_RANGE, BACKLIT, EXT_PLV };
 
 #define QWERTY PDF(_QWERTY)
 
+float caps_lock_on_song[][2] = SONG(CAPS_LOCK_ON_SOUND);
+float caps_lock_off_song[][2] = SONG(CAPS_LOCK_OFF_SOUND);
+
 /* clang-format off */
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+
 
 /* Qwerty
  * ,-----------------------------------------------------------------------------------.
@@ -45,7 +50,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,              KC_BSPC,
     MT(MOD_LCTL, KC_ESC), KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    LT(_VIM, KC_SCLN),  KC_QUOT,
     KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,           KC_ENT ,
-    _______, _______, KC_LGUI, KC_LALT, LOWER,   KC_RSFT, KC_SPC,  TT(_RAISE),   MOUSE,  _______, _______,  _______
+    _______, _______, KC_LGUI, KC_LALT, TT(_LOWER),   KC_RSFT, KC_SPC,  TT(_RAISE),   TT(_MOUSE),  _______, _______,  _______
 ),
 
 /* Lower
@@ -206,6 +211,14 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 }
 
+void caps_word_set_user(bool active) {
+	if (active) {
+		PLAY_SONG(caps_lock_on_song);
+	} else {
+		PLAY_SONG(caps_lock_off_song);
+	}
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef ENCODER_MAP_ENABLE
     if (IS_ENCODEREVENT(record->event) && record->event.pressed) {
@@ -213,6 +226,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
 #endif
     switch (keycode) {
+				case QK_LAYER_TAP_TOGGLE ... QK_LAYER_TAP_TOGGLE_MAX:
+						if (record->tap.count == TAPPING_TOGGLE) { 
+							if (!layer_state_is(_QWERTY)) {
+								PLAY_SONG(caps_lock_off_song);
+							}
+							else {
+								PLAY_SONG(caps_lock_on_song);
+							}
+						}
+						return true;
+						break;
         case BACKLIT:
             if (record->event.pressed) {
                 register_code(KC_RSFT);
@@ -335,3 +359,5 @@ bool dip_switch_update_user(uint8_t index, bool active) {
     }
     return true;
 }
+
+
